@@ -4,12 +4,12 @@ import {User} from './user.type.js';
 import {City} from './city.type.js';
 
 export type Offer = {
-  name: string;
+  title: string;
   description: string;
   postDate: Date;
   city: City;
-  previewImage: string;
-  images: string[];
+  previewImagePath: string;
+  imagePaths: string[];
   premium: boolean;
   rating: number;
   houseType: HouseType;

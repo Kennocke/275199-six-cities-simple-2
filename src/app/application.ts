@@ -5,7 +5,6 @@ import {ConfigInterface} from '../common/config/config.interface.js';
 import { Component } from '../types/component.types.js';
 import { getURI } from '../utils/db.js';
 import { DatabaseIntreface } from '../common/database-client/database.interface.js';
-import { UserModel } from '../modules/user/user.model.js';
 
 @injectable()
 export default class Application {
@@ -29,15 +28,5 @@ export default class Application {
     );
 
     await this.databaseClient.connect(uri);
-
-    const user = UserModel.create({
-      name: 'Stas',
-      email: 'test@mail.ru',
-      avatar: 'keks.jpg',
-      password: '123',
-      type: 'Common'
-     });
-    
-     console.log(user);
   }
 }
