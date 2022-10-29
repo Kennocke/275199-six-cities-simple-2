@@ -6,7 +6,7 @@ import { UserServiceInterface } from './user-service.interface.js';
 import { LoggerInterface } from '../../common/logger/logger.interface.js';
 import { Component } from '../../types/component.types.js';
 
-injectable()
+@injectable()
 export default class UserService implements UserServiceInterface {
     constructor(
         @inject(Component.LoggerInterface) private logger: LoggerInterface,

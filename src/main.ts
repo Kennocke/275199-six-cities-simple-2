@@ -12,9 +12,12 @@ import { DatabaseIntreface } from './common/database-client/database.interface.j
 import UserService from './modules/user/user.service.js';
 import { UserServiceInterface } from './modules/user/user-service.interface.js';
 import { UserEntity, UserModel } from './modules/user/user.entity.js';
-import { RentalOfferServiceInterface } from './modules/rental-offer/rental-offer.interface.js';
-import { RentalOfferEntity, RentalOfferModel } from './modules/rental-offer/rental-offer.entity.js';
-import RentalOfferService from './modules/rental-offer/rental-offer.service.js';
+import { OfferServiceInterface } from './modules/offer/offer-service.interface.js';
+import { OfferEntity, OfferModel } from './modules/offer/offer.entity.js';
+import OfferService from './modules/offer/offer.service.js';
+import { CommentServiceInterface } from './modules/comment/comment-service.interface.js';
+import CommentService from './modules/comment/comment.service.js';
+import { CommentEntity, CommentModel } from './modules/comment/comment.entity.js';
 
 const applicationContainer = new Container();
 applicationContainer.bind<Application>(Component.Application).to(Application).inSingletonScope();
@@ -23,8 +26,10 @@ applicationContainer.bind<ConfigInterface>(Component.ConfigInterface).to(ConfigS
 applicationContainer.bind<DatabaseIntreface>(Component.DatabaseInterface).to(DatabaseService).inSingletonScope();
 applicationContainer.bind<UserServiceInterface>(Component.UserServiceInterface).to(UserService);
 applicationContainer.bind<types.ModelType<UserEntity>>(Component.UserModel).toConstantValue(UserModel);
-applicationContainer.bind<RentalOfferServiceInterface>(Component.RentalOfferServiceInterface).to(RentalOfferService);
-applicationContainer.bind<types.ModelType<RentalOfferEntity>>(Component.RentalOfferModel).toConstantValue(RentalOfferModel);
+applicationContainer.bind<OfferServiceInterface>(Component.OfferServiceInterface).to(OfferService);
+applicationContainer.bind<types.ModelType<OfferEntity>>(Component.OfferModel).toConstantValue(OfferModel);
+applicationContainer.bind<CommentServiceInterface>(Component.CommentServiceInterface).to(CommentService).inSingletonScope();
+applicationContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel);
 
 
 const application = applicationContainer.get<Application>(Component.Application);

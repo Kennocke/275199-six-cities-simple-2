@@ -4,18 +4,18 @@ import {Offer} from '../types/offer.type.js';
 
 export const createOffer = (row: string) => {
   const tokens = row.replace('\n', '').split('\t');
-  const [name, description, postDate, city, previewImage, images,
+  const [title, description, postDate, city, previewImagePath, imagePaths,
     premium, rating, houseType, roomAmount, guestAmount, price,
     facilities, commentsAmount, userName, email,
-    avatar, password, userType, coordinate] = tokens;
+    avatarPath, password, userType, coordinate] = tokens;
 
   return {
-    name,
+    title,
     description,
     postDate: new Date(postDate),
     city: JSON.parse(city),
-    previewImage,
-    images: images.split(';'),
+    previewImagePath,
+    imagePaths: imagePaths.split(';'),
     premium: Boolean(premium),
     rating: parseInt(rating, 10),
     houseType: HouseType[houseType as 'apartment' | 'house' | 'room' | 'hotel'],
@@ -26,7 +26,7 @@ export const createOffer = (row: string) => {
     author: {
       name: userName,
       email,
-      avatar,
+      avatarPath,
       password,
       type: userType as 'Common' | 'Pro'
     },
