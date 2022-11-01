@@ -18,6 +18,11 @@ import OfferService from './modules/offer/offer.service.js';
 import { CommentServiceInterface } from './modules/comment/comment-service.interface.js';
 import CommentService from './modules/comment/comment.service.js';
 import { CommentEntity, CommentModel } from './modules/comment/comment.entity.js';
+import { ControllerInterface } from './common/controller/controller.interface.js';
+import OfferController from './modules/offer/offer.controller.js';
+import ExceptionFilter from './common/errors/exception-filter.js';
+import { ExceptionFilterInterface } from './common/errors/exception-filter.interface.js';
+import UserController from './modules/user/user.controller.js';
 
 const applicationContainer = new Container();
 applicationContainer.bind<Application>(Component.Application).to(Application).inSingletonScope();
@@ -30,6 +35,9 @@ applicationContainer.bind<OfferServiceInterface>(Component.OfferServiceInterface
 applicationContainer.bind<types.ModelType<OfferEntity>>(Component.OfferModel).toConstantValue(OfferModel);
 applicationContainer.bind<CommentServiceInterface>(Component.CommentServiceInterface).to(CommentService).inSingletonScope();
 applicationContainer.bind<types.ModelType<CommentEntity>>(Component.CommentModel).toConstantValue(CommentModel);
+applicationContainer.bind<ControllerInterface>(Component.OfferController).to(OfferController).inSingletonScope();
+applicationContainer.bind<ExceptionFilterInterface>(Component.ExceptionFilterInterface).to(ExceptionFilter).inSingletonScope();
+applicationContainer.bind<ControllerInterface>(Component.UserController).to(UserController).inSingletonScope();
 
 
 const application = applicationContainer.get<Application>(Component.Application);
