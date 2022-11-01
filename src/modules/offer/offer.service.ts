@@ -69,19 +69,6 @@ export default class OfferService implements OfferServiceInterface {
                         postDate: SortType.Down
                     }
                 },
-                {
-                    $project: {
-                        price: 1,
-                        title: 1,
-                        type: 1,
-                        postDate: 1,
-                        city: 1,
-                        previewImagePath: 1,
-                        premium: 1,
-                        rating: 1,
-                        commentCount: 1
-                    }
-                },
             ])
             .exec();
     }

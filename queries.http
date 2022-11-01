@@ -5,3 +5,85 @@ Host: jsonplaceholder.typicode.com
 
 GET /posts HTTP/1.1
 Host: jsonplaceholder.typicode.com
+
+###
+
+GET / HTTP/1.1
+Host: localhost:5000
+
+###
+
+# Предложения
+## Получить список всех предложений
+
+GET http://localhost:5000/offers HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:5000/offers/63616034ae758635e9926161 HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Предложение
+## Создать новое предложение
+
+POST http://localhost:5000/offers HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Тестовое предложение 1",
+    "description": "Описание предложения",
+    "postDate": "12.10.2022",
+    "city": {
+        "name": "Barselona",
+        "location": {
+            "latitude": 1,
+            "longtitude": 2
+        }
+    },
+    "previewImagePath": "previewImage.png",
+    "imagePaths": ["image1.png", "image2.png"],
+    "premium": true,
+    "rating": 3,
+    "houseType": "apartment",
+    "roomAmount": 5,
+    "guestAmount": 3,
+    "price": 25000,
+    "facilities": ["Breakfast", "Air conditioning"],
+    "userId": "635ae8dada05b2a5f95116da",
+    "coordinate": {
+       "latitude": 1.11,
+       "longtitude": 2.22 
+    }
+}
+
+###
+
+# Пользователь
+## Создать пользователя
+POST http://localhost:5000/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Stasvitkovskiy700@gmail.com",
+    "avatarPath": "image.png",
+    "name": "Vitkovskii Stanislav",
+    "password": "123321",
+    "type": "Pro"
+}
+
+
+###
+
+## Авторизация пользователя
+
+POST http://localhost:5000/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "1232312"
+}
+
+###
