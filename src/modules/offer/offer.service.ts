@@ -12,86 +12,86 @@ const MAX_COMMENTS = 60;
 
 @injectable()
 export default class OfferService implements OfferServiceInterface {
-    constructor(
+  constructor(
         @inject(Component.LoggerInterface) private logger: LoggerInterface,
         @inject(Component.OfferModel) private readonly offerModel: types.ModelType<OfferEntity>
-    ) {}
+  ) {}
 
-    public async create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>> {
-        const result = await this.offerModel.create(dto);
-        this.logger.info(`New rental offer: ${result.title}`);
+  public async create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>> {
+    const result = await this.offerModel.create(dto);
+    this.logger.info(`New rental offer: ${result.title}`);
 
-        return result;
-    }
+    return result;
+  }
 
-    public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-        return this.offerModel
-            .findById(offerId)
-            .exec();
-    }
+  public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findById(offerId)
+      .exec();
+  }
 
-    public async find(count: number = MAX_COMMENTS):Promise<DocumentType<OfferEntity>[]> {
-        return this.offerModel
-            .aggregate([
-                {
-                    $lookup: {
-                        from: 'comments',
-                        let: {offerId: '$_id'},
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $eq: ['$offerId', '$$offerId']
-                                    }
-                                }
-                            },
-                            {
-                                $project: {
-                                    _id: 1
-                                }
-                            }
-                        ],
-                        as: 'comments'
-                    }
-                },
-                {
-                    $addFields: {
-                        commentCount: {
-                            $size: '$comments'
-                        }
-                    }
-                },
-                {
-                    $limit: count
-                },
-                {
-                    $sort: {
-                        postDate: SortType.Down
-                    }
-                },
-            ])
-            .exec();
-    }
+  public async find(count: number = MAX_COMMENTS):Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .aggregate([
+        {
+          $lookup: {
+            from: 'comments',
+            let: {offerId: '$_id'},
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: ['$offerId', '$$offerId']
+                  }
+                }
+              },
+              {
+                $project: {
+                  _id: 1
+                }
+              }
+            ],
+            as: 'comments'
+          }
+        },
+        {
+          $addFields: {
+            commentCount: {
+              $size: '$comments'
+            }
+          }
+        },
+        {
+          $limit: count
+        },
+        {
+          $sort: {
+            postDate: SortType.Down
+          }
+        },
+      ])
+      .exec();
+  }
 
-    //Список возвращаемых полей предложения: стоимость аренды, название, тип жилья, дата публикации, город, превью изображения, флаг «Премиум», рейтинг, количество комментариев.
+  //Список возвращаемых полей предложения: стоимость аренды, название, тип жилья, дата публикации, город, превью изображения, флаг «Премиум», рейтинг, количество комментариев.
 
-    public async deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-        return this.offerModel
-            .findByIdAndDelete(offerId)
-            .exec();
-    }
+  public async deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findByIdAndDelete(offerId)
+      .exec();
+  }
 
-    public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
-        return this.offerModel
-            .findByIdAndUpdate(offerId, dto, {new: true})
-            .populate(['userId'])
-            .exec();
-    }
+  public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findByIdAndUpdate(offerId, dto, {new: true})
+      .populate(['userId'])
+      .exec();
+  }
 
-    public async findDetail(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-        return this.offerModel
-            .findById(offerId)
-            .populate(['userId'])
-            .exec();
-    }
+  public async findDetail(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+    return this.offerModel
+      .findById(offerId)
+      .populate(['userId'])
+      .exec();
+  }
 }
