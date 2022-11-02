@@ -10,65 +10,34 @@ import OfferResponse from './response/offer.response.js';
 import { fillDTO } from '../../utils/common.js';
 import CreateOfferDto from './dto/create-offer.dto.js';
 import DetailOfferResponse from './response/detail-offer.response.js';
-import UpdateOfferDto from './dto/update-offer.dto.js';
+// import UpdateOfferDto from './dto/update-offer.dto.js';
 
 @injectable()
 export default class OfferController extends Controller {
-    constructor(
+  constructor(
         @inject(Component.LoggerInterface) logger: LoggerInterface,
         @inject(Component.OfferServiceInterface) private readonly offerService: OfferServiceInterface
-    ) {
-        super(logger);
+  ) {
+    super(logger);
 
-        this.logger.info('Register routes for CategoryController...');
+    this.logger.info('Register routes for CategoryController...');
 
-        this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
-        this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
-        this.addRoute({path: '/:offerId', method: HttpMethod.Get, handler: this.find});
-        this.addRoute({path: '/:offerId', method: HttpMethod.Put, handler: this.update});
-        this.addRoute({path: '/:offerId', method: HttpMethod.Delete, handler: this.delete});
-    }
+    this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
+    this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
+  }
 
-    public async index(_req: Request, res: Response): Promise<void> {
-        const offers = await this.offerService.find();
-        const offerResponse = fillDTO(OfferResponse, offers);
-        this.send(res, StatusCodes.OK, offerResponse);
-    }
+  public async index(_req: Request, res: Response): Promise<void> {
+    const offers = await this.offerService.find();
+    const offerResponse = fillDTO(OfferResponse, offers);
+    this.send(res, StatusCodes.OK, offerResponse);
+  }
 
-    public async create({body}: Request<Record<string, unknown>, Record<string, unknown>, CreateOfferDto>, res: Response): Promise<void> {
-        const result = await this.offerService.create(body);
-        this.send(
-            res,
-            StatusCodes.CREATED,
-            fillDTO(DetailOfferResponse, result)
-        )
-    }
-
-    public async find(_req: Request, _res: Response): Promise<void> {
-        // const result = await this.offerService.findDetail(req.query.offerId);
-
-        // this.send(
-        //     res,
-        //     StatusCodes.OK,
-        //     fillDTO(OfferResponse, result)
-        // );
-    }
-
-    public async update({body}: Request<Record<string, unknown>, Record<string, unknown>, UpdateOfferDto>, res: Response): Promise<void> {
-        const result = await this.offerService.updateById(body.offerId, body);
-        this.send(
-            res,
-            StatusCodes.OK,
-            fillDTO(OfferResponse, result)
-        );
-    }
-
-    public async delete({body}: Request<Record<string, unknown>, Record<string, unknown>, UpdateOfferDto>, res: Response): Promise<void> {
-        const result = await this.offerService.deleteById(body.offerId);
-        this.send(
-            res,
-            StatusCodes.OK,
-            fillDTO(OfferResponse, result)
-        );
-    }
+  public async create({body}: Request<Record<string, unknown>, Record<string, unknown>, CreateOfferDto>, res: Response): Promise<void> {
+    const result = await this.offerService.create(body);
+    this.send(
+      res,
+      StatusCodes.CREATED,
+      fillDTO(DetailOfferResponse, result)
+    );
+  }
 }
