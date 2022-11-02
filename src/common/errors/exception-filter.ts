@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { StatusCodes } from 'http-status-codes';
 import { Component } from '../../types/component.types.js';
@@ -9,32 +9,32 @@ import { createErrorObject } from '../../utils/common.js';
 
 @injectable()
 export default class ExceptionFilter implements ExceptionFilterInterface {
-    constructor(
+  constructor(
         @inject(Component.LoggerInterface) private logger: LoggerInterface
-    ) {
-        this.logger.info('Register ExceptionFilter');
+  ) {
+    this.logger.info('Register ExceptionFilter');
+  }
+
+  private handlerHttpError(error: HttpError, _req: Request, res: Response) {
+    this.logger.error(`[${error.detail}]: ${error.httpStatusCode} — ${error.message}`);
+    res
+      .status(error.httpStatusCode)
+      .json(createErrorObject(error.message));
+  }
+
+  private handleOtherError(error: Error, _req: Request, res: Response) {
+    this.logger.error(error.message);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(createErrorObject(error.message));
+  }
+
+
+  public catch(error: Error, req: Request, res: Response): void {
+    if (error instanceof HttpError) {
+      return this.handlerHttpError(error, req, res);
     }
 
-    private handlerHttpError(error: HttpError, _req: Request, res: Response, _next: NextFunction) {
-        this.logger.error(`[${error.detail}]: ${error.httpStatusCode} — ${error.message}`);
-        res
-            .status(error.httpStatusCode)
-            .json(createErrorObject(error.message));
-    }
-
-    private handleOtherError(error: Error, _req: Request, res: Response, _next: NextFunction) {
-        this.logger.error(error.message);
-        res
-            .status(StatusCodes.INTERNAL_SERVER_ERROR)
-            .json(createErrorObject(error.message));
-    }
-    
-
-    public catch(error: Error, req: Request, res: Response, next: NextFunction): void {
-        if (error instanceof HttpError) {
-            return this.handlerHttpError(error, req, res, next);
-        }
-
-        this.handleOtherError(error, req, res, next);
-    }
+    this.handleOtherError(error, req, res);
+  }
 }

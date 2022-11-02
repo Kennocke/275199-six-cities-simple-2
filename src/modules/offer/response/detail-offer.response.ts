@@ -7,48 +7,48 @@ import { Coordinate } from '../../../types/coordinate.type.js';
 import { UserEntity } from '../../user/user.entity.js';
 
 export default class DetailOfferResponse {
-    @Expose()
-    public title!: string;
+  @Expose()
+  public title!: string;
 
-    @Expose()
-    public description!: string;
+  @Expose()
+  public description!: string;
 
-    @Expose()
-    public postDate!: Date;
+  @Expose()
+  public postDate!: Date;
 
-    @Expose()
-    public city!: City;
+  @Expose()
+  public city!: City;
 
-    @Expose()
-    public previewImagePath!: string;
+  @Expose()
+  public previewImagePath!: string;
 
-    @Expose()
-    public imagePaths!: string[];
+  @Expose()
+  public imagePaths!: string[];
 
-    @Expose()
-    public premium!: boolean;
+  @Expose()
+  public premium!: boolean;
 
-    @Expose()
-    public rating!: number;
+  @Expose()
+  public rating!: number;
 
-    @Expose()
-    public houseType!: HouseType;
+  @Expose()
+  public houseType!: HouseType;
 
-    @Expose()
-    public roomAmount!: number;
+  @Expose()
+  public roomAmount!: number;
 
-    @Expose()
-    public guestAmount!: number;
+  @Expose()
+  public guestAmount!: number;
 
-    @Expose()
-    public price!: number;
+  @Expose()
+  public price!: number;
 
-    @Expose()
-    public facilities!: Facilities[];
+  @Expose()
+  public facilities!: Facilities[];
 
-    @Expose()
-    public userId!: Ref<UserEntity>;
+  @Expose()
+  public userId!: Ref<UserEntity>;
 
-    @Expose()
-    public coordinate!: Coordinate;
+  @Expose()
+  public coordinate!: Coordinate;
 }

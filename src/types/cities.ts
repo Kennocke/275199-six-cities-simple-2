@@ -1,44 +1,44 @@
 export const Cities = [
-    {
-        location: {
-            latitude: 48.85661,
-            longitude: 2.351499
-        },
-        name: 'Paris'
+  {
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499
     },
-    {
-        location: {
-            latitude: 50.938361,
-            longitude: 6.959974
-        },
-        name: 'Cologne'
+    name: 'Paris'
+  },
+  {
+    location: {
+      latitude: 50.938361,
+      longitude: 6.959974
     },
-    {
-        location: {
-            latitude: 50.846557,
-            longitude: 4.351697
-        },
-        name: 'Brussels'
+    name: 'Cologne'
+  },
+  {
+    location: {
+      latitude: 50.846557,
+      longitude: 4.351697
     },
-    {
-        location: {
-            latitude: 52.370216,
-            longitude: 4.895168
-        },
-        name: 'Amsterdam'
+    name: 'Brussels'
+  },
+  {
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168
     },
-    {
-        location: {
-            latitude: 53.550341,
-            longitude: 10.000654
-        },
-        name: 'Hamburg'
+    name: 'Amsterdam'
+  },
+  {
+    location: {
+      latitude: 53.550341,
+      longitude: 10.000654
     },
-    {
-        location: {
-            latitude: 51.225402,
-            longitude: 6.776314
-        },
-        name: 'Dusseldorf'
-    }
- ] as const;
+    name: 'Hamburg'
+  },
+  {
+    location: {
+      latitude: 51.225402,
+      longitude: 6.776314
+    },
+    name: 'Dusseldorf'
+  }
+] as const;
