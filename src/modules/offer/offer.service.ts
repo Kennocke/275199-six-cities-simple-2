@@ -30,7 +30,7 @@ export default class OfferService implements OfferServiceInterface {
       .exec();
   }
 
-  public async find(count: number = MAX_COMMENTS):Promise<DocumentType<OfferEntity>[]> {
+  public async find(limit: number = MAX_COMMENTS):Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
         {
@@ -62,7 +62,7 @@ export default class OfferService implements OfferServiceInterface {
           }
         },
         {
-          $limit: count
+          $limit: limit
         },
         {
           $sort: {
@@ -93,5 +93,9 @@ export default class OfferService implements OfferServiceInterface {
       .findById(offerId)
       .populate(['userId'])
       .exec();
+  }
+
+  public async exists(documentId: string): Promise<boolean> {
+    return (await this.offerModel.exists({_id: documentId})) !== null;
   }
 }
