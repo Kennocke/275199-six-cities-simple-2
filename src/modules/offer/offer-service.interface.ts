@@ -1,9 +1,10 @@
 import { DocumentType } from '@typegoose/typegoose';
+import { OfferExistsInterface } from '../../types/offer-exists.interface.js';
 import CreateOfferDto from './dto/create-offer.dto.js';
 import UpdateOfferDto from './dto/update-offer.dto.js';
 import { OfferEntity } from './offer.entity.js';
 
-export interface OfferServiceInterface {
+export interface OfferServiceInterface extends OfferExistsInterface {
     create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
     findById(rentalOfferId: string):Promise<DocumentType<OfferEntity> | null>;
     find(limit?: number):Promise<DocumentType<OfferEntity>[]>;
