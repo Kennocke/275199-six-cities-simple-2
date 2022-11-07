@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { StatusCodes } from 'http-status-codes';
 import { Component } from '../../types/component.types.js';
@@ -15,14 +15,14 @@ export default class ExceptionFilter implements ExceptionFilterInterface {
     this.logger.info('Register ExceptionFilter');
   }
 
-  private handlerHttpError(error: HttpError, _req: Request, res: Response) {
+  private handlerHttpError(error: HttpError, _req: Request, res: Response, _next: NextFunction) {
     this.logger.error(`[${error.detail}]: ${error.httpStatusCode} — ${error.message}`);
     res
       .status(error.httpStatusCode)
       .json(createErrorObject(error.message));
   }
 
-  private handleOtherError(error: Error, _req: Request, res: Response) {
+  private handleOtherError(error: Error, _req: Request, res: Response, _next: NextFunction) {
     this.logger.error(error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -30,11 +30,11 @@ export default class ExceptionFilter implements ExceptionFilterInterface {
   }
 
 
-  public catch(error: Error, req: Request, res: Response): void {
+  public catch(error: Error | HttpError, req: Request, res: Response, next: NextFunction): void {
     if (error instanceof HttpError) {
-      return this.handlerHttpError(error, req, res);
+      return this.handlerHttpError(error, req, res, next);
     }
 
-    this.handleOtherError(error, req, res);
+    this.handleOtherError(error, req, res, next);
   }
 }

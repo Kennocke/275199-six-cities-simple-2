@@ -6,9 +6,10 @@ import { OfferEntity } from './offer.entity.js';
 export interface OfferServiceInterface {
     create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
     findById(rentalOfferId: string):Promise<DocumentType<OfferEntity> | null>;
-    find():Promise<DocumentType<OfferEntity>[]>;
+    find(limit?: number):Promise<DocumentType<OfferEntity>[]>;
     deleteById(offerId: string):Promise<DocumentType<OfferEntity> | null>;
     updateById(offerId: string, dto: UpdateOfferDto):Promise<DocumentType<OfferEntity> | null>;
     findDetail(offerId: string): Promise<DocumentType<OfferEntity> | null>;
+    exists(documentId: string): Promise<boolean>;
     // incCommentCount(offerId: string):Promise<DocumentType<OfferEntity> | null>;
 }
