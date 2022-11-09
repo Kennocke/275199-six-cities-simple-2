@@ -1,3 +1,4 @@
+import * as jose from 'jose';
 import crypto from 'crypto';
 import { plainToInstance, ClassConstructor } from 'class-transformer';
 import {HouseType} from '../types/house-type.enum.js';
@@ -49,3 +50,10 @@ export const fillDTO = <T, V>(someDto: ClassConstructor<T>, plainObject: V) => p
 export const createErrorObject = (message: string) => ({
   error: message
 });
+
+export const createJWT = async (algoritm: string, jwtSecret: string, payload: object): Promise<string> => 
+  new jose.SignJWT({...payload})
+  .setProtectedHeader({alg: algoritm})
+  .setIssuedAt()
+  .setExpirationTime('2d')
+  .sign(crypto.createSecretKey(jwtSecret, 'utf-8'));

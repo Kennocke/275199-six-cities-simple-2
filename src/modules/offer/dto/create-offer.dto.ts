@@ -1,10 +1,8 @@
-import { Length, IsDateString, IsArray, ArrayMinSize, ArrayMaxSize, IsBoolean, Min, Max, IsEnum, IsInt, IsMongoId, ValidateNested, IsString} from 'class-validator';
-import { Ref } from '@typegoose/typegoose';
+import { Length, IsDateString, IsArray, ArrayMinSize, ArrayMaxSize, IsBoolean, Min, Max, IsEnum, IsInt, ValidateNested, IsString} from 'class-validator';
 import { City } from '../../../types/city.type.js';
 import { Facilities } from '../../../types/facilities.enum.js';
 import { HouseType } from '../../../types/house-type.enum.js';
 import { Coordinate } from '../../../types/coordinate.type.js';
-import { UserEntity } from '../../user/user.entity.js';
 
 export default class CreateOfferDto {
   @Length(10, 100, {message: 'Title length must be between 10 and 100'})
@@ -54,8 +52,7 @@ export default class CreateOfferDto {
   @IsEnum(Facilities, {message: 'Facilities must be specific value', each: true})
   public facilities!: Facilities[];
 
-  @IsMongoId({message: 'userId field must be valid an id'})
-  public userId!: Ref<UserEntity>;
+  public userId!: string;
 
   @ValidateNested({message: 'Coordinate must be specific format'})
   public coordinate!: Coordinate;
